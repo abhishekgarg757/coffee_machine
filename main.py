@@ -30,37 +30,45 @@ resources = {
     "coffee": 100,
 }
 
+wallet = 0
+
 # TODO 1. Prompt user by asking “ What would you like? (espresso/latte/cappuccino): ”
-user_input = input("What would you like? (espresso/latte/cappuccino): ")
+# TODO 2.Turn off the Coffee Machine by entering “ off ” to the prompt.
+# TODO 3. Print report.
+# TODO 4.Check resources sufficient?
+machine_on = True
+while machine_on:
+    user_input = input("What would you like? (espresso/latte/cappuccino): ")
 
-def func1():
-    """it is defining off and report"""
     if user_input == "off":
-        return False
-    elif user_input == "report":
-        print(resources)
-    return user_input
+        machine_on = False
 
-def func2():
-    if user_input == "latte" or user_input == "cappuccino":
-        if MENU[user_input]["ingredients"]["water"] <= resources["water"]  and MENU[user_input]["ingredients"]["milk"] <= resources["milk"]and MENU[user_input]["ingredients"]["coffee"] <= resources["coffee"]:
+    elif user_input == "report":
+        print(f"Water:{resources["water"]} ml")
+        print(f"Milk:{resources["milk"]} ml")
+        print(f"Coffee:{resources["coffee"]} gm")
+        print(f"Money:${wallet} ")
+    else:
+        drink = MENU[str(user_input)]
+        print(drink)
+
+
+
+def check_resources():
+    if user_input() == "latte" or user_input == "cappuccino":
+        if MENU[user_input()]["ingredients"]["water"] <= resources["water"]  and MENU[user_input()]["ingredients"]["milk"] <= resources["milk"]and MENU[user_input()]["ingredients"]["coffee"] <= resources["coffee"]:
+            #print(f"{MENU[user_input()]["ingredients"]["water"]}")
+            print("A")
             return True
         else:
+            print("B")
             return False
+
             #print(f"{MENU[x]["ingredients"]["water"]},{MENU[x]["ingredients"]["milk"]},{MENU[x]["ingredients"]["coffee"]}")
-    elif MENU[user_input]["ingredients"]["water"] <= resources["water"] and MENU[user_input]["ingredients"]["coffee"] <= resources["coffee"]:
+    elif MENU[user_input()]["ingredients"]["water"] <= resources["water"] and MENU[user_input()]["ingredients"]["coffee"] <= resources["coffee"]:
+        print("C")
+        print(f"{MENU[user_input()]["ingredients"]["water"]}")
         return True
     else:
         print("no")
 
-func2()
-
-
-
-
-# TODO 2.Turn off the Coffee Machine by entering “ off ” to the prompt.
-
-
-# TODO 3. Print report.
-
-# TODO 4.Check resources sufficient?
