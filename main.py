@@ -36,6 +36,22 @@ wallet = 0
 # TODO 2.Turn off the Coffee Machine by entering “ off ” to the prompt.
 # TODO 3. Print report.
 # TODO 4.Check resources sufficient?
+
+def check_resources(ordered_ingredients):
+    for item in ordered_ingredients:
+        if ordered_ingredients[item] >= resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+    return True
+
+def coins():
+    print("Please insert coins")
+    total = int(input("how many quaters? :")) *0.25
+    total += int(input("how many dimes ?:"))*0.1
+    total += int(input("how many nickels :"))*0.05
+    total += int(input("how many pennies :"))*0.01
+    return total
+
 machine_on = True
 while machine_on:
     user_input = input("What would you like? (espresso/latte/cappuccino): ")
@@ -49,26 +65,19 @@ while machine_on:
         print(f"Coffee:{resources["coffee"]} gm")
         print(f"Money:${wallet} ")
     else:
-        drink = MENU[str(user_input)]
-        print(drink)
+        drink = MENU[user_input]
+        if check_resources(drink["ingredients"]):
+            payment = coins()
+            if payment < drink["cost"]:
+                print("Sorry that's not enough money. Money refunded.")
+            else:
+                change = round((payment-drink["cost"]),2)
+                wallet = wallet+drink["cost"]
+                print(f"here is your change : {change}")
+                for item in drink["ingredients"]:
+                    resources[item] -= drink["ingredients"][item]
+                print(f"enjoy you {user_input}")
 
 
 
-def check_resources():
-    if user_input() == "latte" or user_input == "cappuccino":
-        if MENU[user_input()]["ingredients"]["water"] <= resources["water"]  and MENU[user_input()]["ingredients"]["milk"] <= resources["milk"]and MENU[user_input()]["ingredients"]["coffee"] <= resources["coffee"]:
-            #print(f"{MENU[user_input()]["ingredients"]["water"]}")
-            print("A")
-            return True
-        else:
-            print("B")
-            return False
-
-            #print(f"{MENU[x]["ingredients"]["water"]},{MENU[x]["ingredients"]["milk"]},{MENU[x]["ingredients"]["coffee"]}")
-    elif MENU[user_input()]["ingredients"]["water"] <= resources["water"] and MENU[user_input()]["ingredients"]["coffee"] <= resources["coffee"]:
-        print("C")
-        print(f"{MENU[user_input()]["ingredients"]["water"]}")
-        return True
-    else:
-        print("no")
 
